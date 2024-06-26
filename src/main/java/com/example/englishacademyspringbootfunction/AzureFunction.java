@@ -32,6 +32,8 @@ public class AzureFunction {
         log.info("Received request for uppercase function");
 
         String input = request.getQueryParameters().get("input");
+        if (input == null || input.isEmpty()) input = "";
+
         Function<String, String> uppercaseFunction = functionCatalog.lookup(Function.class, "uppercase");
         String result = uppercaseFunction.apply(input);
 
