@@ -1,5 +1,6 @@
 package com.example.englishacademyspringbootfunction;
 
+import com.example.englishacademyspringbootfunction.dto.RegistrationFormDTO;
 import com.microsoft.azure.functions.*;
 import com.microsoft.azure.functions.annotation.AuthorizationLevel;
 import com.microsoft.azure.functions.annotation.FunctionName;
@@ -41,4 +42,25 @@ public class AzureFunction {
 
     }
 
+    @FunctionName("processRegistration")
+    public HttpResponseMessage processRegistration(
+            @HttpTrigger(
+                    name = "req",
+                    methods = {HttpMethod.POST},
+                    authLevel = AuthorizationLevel.FUNCTION,
+                    route = "registrations"
+            ) HttpRequestMessage<Optional<RegistrationFormDTO>> request,
+            ExecutionContext context) {
+        log.info("Received registration request");
+
+        RegistrationFormDTO form = request.getBody().orElse(null);
+
+        if (form == null)
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Invalid registration form").build();
+
+
+        log.info("Processing registration for: {}", form.getFirstName());
+
+        return request.createResponseBuilder(HttpStatus.OK).body("Registration processed successfully").build();
+    }
 }
