@@ -25,6 +25,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: ${{ env.JAVA_VERSION }}
+          cache: 'maven'
 
       - name: 'Restore Project Dependencies Using Mvn'
         shell: pwsh
