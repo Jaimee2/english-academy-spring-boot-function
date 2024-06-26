@@ -59,8 +59,8 @@ public class AzureFunction {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Invalid registration form").build();
 
 
-        log.info("Processing registration for: {}", form.getFirstName());
+        log.info("Processing registration for: {}", form);
 
-        return request.createResponseBuilder(HttpStatus.OK).body("Registration processed successfully").build();
+        return request.createResponseBuilder(HttpStatus.OK).body("Registration processed successfully: " + form).build();
     }
 }
