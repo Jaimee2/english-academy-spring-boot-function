@@ -3,6 +3,7 @@ package com.example.englishacademyspringbootfunction;
 import com.example.englishacademyspringbootfunction.dao.entity.Student;
 import com.example.englishacademyspringbootfunction.dao.repository.StudentsRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import javax.annotation.PostConstruct;
 import java.util.function.Function;
 
+@Slf4j
 @AllArgsConstructor
 @SpringBootApplication
 public class EnglishAcademySpringBootFunctionApplication {
@@ -22,7 +24,7 @@ public class EnglishAcademySpringBootFunctionApplication {
 
     @PostConstruct
     void loadData() {
-        System.out.println("***************************************************************");
+        log.info("***************************************************************");
 
         Student student = Student.builder()
                 .firstName("Jaime without id")
@@ -38,8 +40,10 @@ public class EnglishAcademySpringBootFunctionApplication {
                 .build();
 
         studentsRepository.save(student);
-        studentsRepository.findAll().forEach(System.out::println);
-        System.out.println("***************************************************************");
+
+        studentsRepository.findAll().forEach(student1 -> log.info(student1.toString()));
+
+        log.info("***************************************************************");
     }
 
 
