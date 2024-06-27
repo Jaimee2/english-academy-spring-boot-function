@@ -1,5 +1,7 @@
 package com.example.englishacademyspringbootfunction;
 
+import com.example.englishacademyspringbootfunction.dao.entity.Student;
+import com.example.englishacademyspringbootfunction.dao.repository.StudentsRepository;
 import com.example.englishacademyspringbootfunction.dto.RegistrationFormDTO;
 import com.microsoft.azure.functions.*;
 import com.microsoft.azure.functions.annotation.AuthorizationLevel;
@@ -8,10 +10,14 @@ import com.microsoft.azure.functions.annotation.HttpTrigger;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.function.context.FunctionCatalog;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.function.Function;
+
+import static org.springframework.http.ResponseEntity.ok;
+
 
 @Slf4j
 @Component
@@ -67,6 +73,22 @@ public class AzureFunction {
                 .createResponseBuilder(HttpStatus.OK)
                 .body("Registration processed successfully: " + form)
                 .build();
+    }
+
+    private StudentsRepository studentsRepository;
+
+    @FunctionName("getAllStudents")
+    public ResponseEntity<Iterable<Student>> getAllStudents(
+            @HttpTrigger(
+                    name = "req",
+                    methods = {HttpMethod.GET},
+                    authLevel = AuthorizationLevel.ANONYMOUS,
+                    route = "students"
+            ) HttpRequestMessage<Optional<String>> request,
+            ExecutionContext context) {
+        log.info("Received request to get all students");
+
+        return ok().body(studentsRepository.findAll());
     }
 
 }
