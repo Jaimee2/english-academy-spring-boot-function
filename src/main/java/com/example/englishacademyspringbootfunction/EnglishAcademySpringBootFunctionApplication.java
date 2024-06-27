@@ -26,6 +26,7 @@ public class EnglishAcademySpringBootFunctionApplication {
     void loadData() {
         log.info("***************************************************************");
 
+
         Student student = Student.builder()
                 .firstName("Jaime without id")
                 .lastName("Doe")
