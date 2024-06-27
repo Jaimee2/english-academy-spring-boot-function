@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 import java.util.function.Function;
 
 @Slf4j
@@ -42,7 +43,8 @@ public class EnglishAcademySpringBootFunctionApplication {
 
         studentsRepository.save(student);
 
-        studentsRepository.findAll().forEach(student1 -> log.info(student1.toString()));
+        List<Student> studentList = studentsRepository.findAll();
+        studentList.forEach(System.out::println);
 
         log.info("***************************************************************");
     }

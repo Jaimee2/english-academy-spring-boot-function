@@ -2,9 +2,12 @@ package com.example.englishacademyspringbootfunction.dao.entity;
 
 import com.azure.spring.data.cosmos.core.mapping.Container;
 import com.azure.spring.data.cosmos.core.mapping.GeneratedValue;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 
+@ToString
 @Data
 @Builder
 @Container(containerName = "students")

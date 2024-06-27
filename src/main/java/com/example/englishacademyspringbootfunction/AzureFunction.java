@@ -13,6 +13,7 @@ import org.springframework.cloud.function.context.FunctionCatalog;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -78,7 +79,7 @@ public class AzureFunction {
     private StudentsRepository studentsRepository;
 
     @FunctionName("getAllStudents")
-    public ResponseEntity<Iterable<Student>> getAllStudents(
+    public ResponseEntity<List<Student>> getAllStudents(
             @HttpTrigger(
                     name = "req",
                     methods = {HttpMethod.GET},
