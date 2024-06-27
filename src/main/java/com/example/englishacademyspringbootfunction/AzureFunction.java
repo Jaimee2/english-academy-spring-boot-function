@@ -47,7 +47,7 @@ public class AzureFunction {
             @HttpTrigger(
                     name = "req",
                     methods = {HttpMethod.POST},
-                    authLevel = AuthorizationLevel.FUNCTION,
+                    authLevel = AuthorizationLevel.ANONYMOUS,
                     route = "registrations"
             ) HttpRequestMessage<Optional<RegistrationFormDTO>> request,
             ExecutionContext context) {
@@ -58,9 +58,12 @@ public class AzureFunction {
         if (form == null)
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Invalid registration form").build();
 
-
         log.info("Processing registration for: {}", form);
 
-        return request.createResponseBuilder(HttpStatus.OK).body("Registration processed successfully: " + form).build();
+        return request
+                .createResponseBuilder(HttpStatus.OK)
+                .body("Registration processed successfully: " + form)
+                .build();
+
     }
 }
