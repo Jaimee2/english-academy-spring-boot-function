@@ -1,7 +1,7 @@
 package com.example.englishacademyspringbootfunction;
 
-import com.example.englishacademyspringbootfunction.dao.entity.Student;
-import com.example.englishacademyspringbootfunction.dao.repository.StudentsRepository;
+import com.example.englishacademyspringbootfunction.student.service.dao.entity.Student;
+import com.example.englishacademyspringbootfunction.student.service.dao.repository.StudentsRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -27,7 +27,6 @@ public class EnglishAcademySpringBootFunctionApplication {
     void loadData() {
         log.info("***************************************************************");
 
-
         Student student = Student.builder()
                 .firstName("Jaime without id")
                 .lastName("Doe")
@@ -45,19 +44,12 @@ public class EnglishAcademySpringBootFunctionApplication {
 
         List<Student> studentList = studentsRepository.findAll();
         studentList.forEach(System.out::println);
+
         System.out.println("------------------------------------------------------");
         List<Student> students = studentsRepository.findAll();
         System.out.println(students);
         log.info("***************************************************************");
     }
 
-
-    @Bean
-    public Function<String, String> uppercase() {
-        return payload -> {
-            String output = payload.toUpperCase();
-            return String.format("Input: %s", output);
-        };
-    }
 
 }

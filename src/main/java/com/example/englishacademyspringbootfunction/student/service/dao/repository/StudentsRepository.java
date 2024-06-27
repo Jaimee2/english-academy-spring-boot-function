@@ -1,6 +1,6 @@
-package com.example.englishacademyspringbootfunction.dao.repository;
+package com.example.englishacademyspringbootfunction.student.service.dao.repository;
 
-import com.example.englishacademyspringbootfunction.dao.entity.Student;
+import com.example.englishacademyspringbootfunction.student.service.dao.entity.Student;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
