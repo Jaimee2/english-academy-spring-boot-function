@@ -45,7 +45,9 @@ public class EnglishAcademySpringBootFunctionApplication {
 
         List<Student> studentList = studentsRepository.findAll();
         studentList.forEach(System.out::println);
-
+        System.out.println("------------------------------------------------------");
+        List<Student> students = studentsRepository.findAll();
+        System.out.println(students);
         log.info("***************************************************************");
     }
 

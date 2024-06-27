@@ -79,7 +79,7 @@ public class AzureFunction {
     private StudentsRepository studentsRepository;
 
     @FunctionName("getAllStudents")
-    public ResponseEntity<List<Student>> getAllStudents(
+    public HttpResponseMessage getAllStudents(
             @HttpTrigger(
                     name = "req",
                     methods = {HttpMethod.GET},
@@ -89,7 +89,10 @@ public class AzureFunction {
             ExecutionContext context) {
         log.info("Received request to get all students");
 
-        return ok().body(studentsRepository.findAll());
+        return request.createResponseBuilder(HttpStatus.OK)
+                .header("Content-Type", "application/json")
+                .body(studentsRepository.findAll())
+                .build();
     }
 
 }
