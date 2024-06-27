@@ -56,7 +56,10 @@ public class AzureFunction {
         RegistrationFormDTO form = request.getBody().orElse(null);
 
         if (form == null)
-            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Invalid registration form").build();
+            return request
+                    .createResponseBuilder(HttpStatus.BAD_REQUEST)
+                    .body("Invalid registration form")
+                    .build();
 
         log.info("Processing registration for: {}", form);
 
@@ -64,6 +67,6 @@ public class AzureFunction {
                 .createResponseBuilder(HttpStatus.OK)
                 .body("Registration processed successfully: " + form)
                 .build();
-
     }
+
 }
