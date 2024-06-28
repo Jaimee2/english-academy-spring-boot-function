@@ -1,4 +1,4 @@
-package com.example.englishacademyspringbootfunction.student.service.dto;
+package com.example.englishacademyspringbootfunction.student.dto;
 
 import lombok.Data;
 

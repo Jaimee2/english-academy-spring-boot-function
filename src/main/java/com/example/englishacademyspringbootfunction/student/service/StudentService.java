@@ -1,11 +1,14 @@
 package com.example.englishacademyspringbootfunction.student.service;
 
-import com.example.englishacademyspringbootfunction.student.service.dao.entity.Student;
+import com.example.englishacademyspringbootfunction.student.dao.entity.Student;
+import com.example.englishacademyspringbootfunction.student.dto.RegistrationFormDTO;
 
 import java.util.List;
 
 public interface StudentService {
 
-    List<Student> GetAllStudents();
+    List<Student> findAllStudents();
+
+    Student saveStudent(RegistrationFormDTO registrationFormDTO);
 
 }

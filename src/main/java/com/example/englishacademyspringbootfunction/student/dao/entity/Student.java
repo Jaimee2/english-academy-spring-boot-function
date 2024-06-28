@@ -1,4 +1,4 @@
-package com.example.englishacademyspringbootfunction.student.service.dao.entity;
+package com.example.englishacademyspringbootfunction.student.dao.entity;
 
 import com.azure.spring.data.cosmos.core.mapping.Container;
 import com.azure.spring.data.cosmos.core.mapping.GeneratedValue;

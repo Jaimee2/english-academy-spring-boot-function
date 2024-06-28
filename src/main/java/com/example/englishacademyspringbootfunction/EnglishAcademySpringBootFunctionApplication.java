@@ -1,16 +1,14 @@
 package com.example.englishacademyspringbootfunction;
 
-import com.example.englishacademyspringbootfunction.student.service.dao.entity.Student;
-import com.example.englishacademyspringbootfunction.student.service.dao.repository.StudentsRepository;
+import com.example.englishacademyspringbootfunction.student.dao.entity.Student;
+import com.example.englishacademyspringbootfunction.student.dao.repository.StudentsRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.function.Function;
 
 @Slf4j
 @AllArgsConstructor

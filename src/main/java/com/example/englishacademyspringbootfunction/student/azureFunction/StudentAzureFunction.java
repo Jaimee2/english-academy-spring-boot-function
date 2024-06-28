@@ -1,7 +1,8 @@
-package com.example.englishacademyspringbootfunction.student.service.azureFunction;
+package com.example.englishacademyspringbootfunction.student.azureFunction;
 
+import com.example.englishacademyspringbootfunction.student.dao.entity.Student;
+import com.example.englishacademyspringbootfunction.student.dto.RegistrationFormDTO;
 import com.example.englishacademyspringbootfunction.student.service.StudentService;
-import com.example.englishacademyspringbootfunction.student.service.dto.RegistrationFormDTO;
 import com.microsoft.azure.functions.*;
 import com.microsoft.azure.functions.annotation.AuthorizationLevel;
 import com.microsoft.azure.functions.annotation.FunctionName;
@@ -28,22 +29,22 @@ public class StudentAzureFunction {
             ) HttpRequestMessage<Optional<String>> request,
             ExecutionContext context) {
         log.info(context.toString());
-        log.info("Received request to get all students");
+        log.info("Recei0ved request to get all students");
 
         return request.createResponseBuilder(HttpStatus.OK)
                 .header("Content-Type", "application/json")
-                .body(studentService.GetAllStudents())
+                .body(studentService.findAllStudents())
                 .build();
     }
 
     @FunctionName("processRegistration")
     public HttpResponseMessage processRegistration(@HttpTrigger(
-                    name = "req",
-                    methods = {HttpMethod.POST},
-                    authLevel = AuthorizationLevel.ANONYMOUS,
-                    route = "registrations"
-            ) HttpRequestMessage<Optional<RegistrationFormDTO>> request,
-            ExecutionContext context) {
+            name = "req",
+            methods = {HttpMethod.POST},
+            authLevel = AuthorizationLevel.ANONYMOUS,
+            route = "registrations"
+    ) HttpRequestMessage<Optional<RegistrationFormDTO>> request,
+                                                   ExecutionContext context) {
         log.info("Received registration request");
 
         RegistrationFormDTO form = request.getBody().orElse(null);
@@ -54,11 +55,12 @@ public class StudentAzureFunction {
                     .body("Invalid registration form")
                     .build();
 
+        Student student = studentService.saveStudent(form);
         log.info("Processing registration for: {}", form);
 
         return request
                 .createResponseBuilder(HttpStatus.OK)
-                .body("Registration processed successfully: " + form)
+                .body("Registration processed successfully: " + student.toString())
                 .build();
     }
 
