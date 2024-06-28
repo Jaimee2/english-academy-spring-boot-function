@@ -26,4 +26,8 @@ public class StudentServiceImpl implements StudentService {
         return studentsRepository.save(MapperStruct.INSTANCE.dtoToDao(registrationFormDTO));
     }
 
+    public void deleteStudentById(String id) {
+        studentsRepository.deleteById(id);
+    }
+
 }

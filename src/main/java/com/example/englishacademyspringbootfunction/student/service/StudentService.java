@@ -11,4 +11,6 @@ public interface StudentService {
 
     Student saveStudent(RegistrationFormDTO registrationFormDTO);
 
+    void deleteStudentById(String id);
+
 }

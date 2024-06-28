@@ -5,6 +5,7 @@ import com.example.englishacademyspringbootfunction.student.dto.RegistrationForm
 import com.example.englishacademyspringbootfunction.student.service.StudentService;
 import com.microsoft.azure.functions.*;
 import com.microsoft.azure.functions.annotation.AuthorizationLevel;
+import com.microsoft.azure.functions.annotation.BindingName;
 import com.microsoft.azure.functions.annotation.FunctionName;
 import com.microsoft.azure.functions.annotation.HttpTrigger;
 import lombok.AllArgsConstructor;
@@ -29,12 +30,27 @@ public class StudentAzureFunction {
             ) HttpRequestMessage<Optional<String>> request,
             ExecutionContext context) {
         log.info(context.toString());
-        log.info("Recei0ved request to get all students");
+        log.info("Received request to get all students");
 
         return request.createResponseBuilder(HttpStatus.OK)
                 .header("Content-Type", "application/json")
                 .body(studentService.findAllStudents())
                 .build();
+    }
+
+    @FunctionName("deleteStudentById")
+    public HttpResponseMessage deleteStudentById(
+            @HttpTrigger(name = "req",
+                    methods = {HttpMethod.DELETE},
+                    authLevel = AuthorizationLevel.ANONYMOUS,
+                    route = "students/{id}"
+            ) HttpRequestMessage<Optional<String>> request,
+            @BindingName("id") String id,
+            ExecutionContext context) {
+        log.info("Received request to delete student with id: {}", id);
+        studentService.deleteStudentById(id);
+        return request.createResponseBuilder(HttpStatus.OK).build();
+
     }
 
     @FunctionName("processRegistration")
