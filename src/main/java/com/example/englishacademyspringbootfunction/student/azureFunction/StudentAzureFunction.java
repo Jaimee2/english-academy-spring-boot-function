@@ -83,7 +83,7 @@ public class StudentAzureFunction {
 
     @FunctionName("warmUp")
     public void warmUp(// Every 5 minutes
-                       @TimerTrigger(name = "keepWarmTrigger", schedule = "0 */5 * * * *") String timerInfo,
+                       @TimerTrigger(name = "keepWarmTrigger", schedule = "0 */3 * * * *") String timerInfo,
                        ExecutionContext context) {
         log.info("Warm-up trigger fired at: {}", java.time.LocalDateTime.now());
     }
