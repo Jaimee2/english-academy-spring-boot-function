@@ -1,4 +1,4 @@
-package com.example.englishacademyspringbootfunction.student.azureFunction;
+package com.example.englishacademyspringbootfunction.student.azure.function;
 
 import com.example.englishacademyspringbootfunction.student.dao.entity.Student;
 import com.example.englishacademyspringbootfunction.student.dto.RegistrationFormDTO;
@@ -83,8 +83,9 @@ public class StudentAzureFunction {
 
     @FunctionName("warmUp")
     public void warmUp(// Every 5 minutes
-                       @TimerTrigger(name = "keepWarmTrigger", schedule = "0 */3 * * * *") String timerInfo,
+                       @TimerTrigger(name = "keepWarmTrigger", schedule = "0 */2 * * * *") String timerInfo,
                        ExecutionContext context) {
+        log.info(System.getProperties().toString());
         log.info("Warm-up trigger fired at: {}", java.time.LocalDateTime.now());
     }
 
