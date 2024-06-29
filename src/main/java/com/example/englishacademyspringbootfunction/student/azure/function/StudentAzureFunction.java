@@ -55,13 +55,14 @@ public class StudentAzureFunction {
     }
 
     @FunctionName("processRegistration")
-    public HttpResponseMessage processRegistration(@HttpTrigger(
-            name = "req",
-            methods = {HttpMethod.POST},
-            authLevel = AuthorizationLevel.ANONYMOUS,
-            route = "registrations"
-    ) HttpRequestMessage<Optional<RegistrationFormDTO>> request,
-                                                   ExecutionContext context) {
+    public HttpResponseMessage processRegistration(
+            @HttpTrigger(
+                    name = "req",
+                    methods = {HttpMethod.POST},
+                    authLevel = AuthorizationLevel.ANONYMOUS,
+                    route = "registrations"
+            ) HttpRequestMessage<Optional<RegistrationFormDTO>> request,
+            ExecutionContext context) {
         log.info("Received registration request");
 
         RegistrationFormDTO form = request.getBody().orElse(null);
@@ -83,7 +84,7 @@ public class StudentAzureFunction {
 
     @FunctionName("warmUp")
     public void warmUp(// Every 5 minutes
-                       @TimerTrigger(name = "keepWarmTrigger", schedule = "0 */2 * * * *") String timerInfo,
+                       @TimerTrigger(name = "keepWarmTrigger", schedule = "0 */1 * * * *") String timerInfo,
                        ExecutionContext context) {
         log.info(System.getProperties().toString());
         log.info("Warm-up trigger fired at: {}", java.time.LocalDateTime.now());
