@@ -4,10 +4,7 @@ import com.example.englishacademyspringbootfunction.student.dao.entity.Student;
 import com.example.englishacademyspringbootfunction.student.dto.RegistrationFormDTO;
 import com.example.englishacademyspringbootfunction.student.service.StudentService;
 import com.microsoft.azure.functions.*;
-import com.microsoft.azure.functions.annotation.AuthorizationLevel;
-import com.microsoft.azure.functions.annotation.BindingName;
-import com.microsoft.azure.functions.annotation.FunctionName;
-import com.microsoft.azure.functions.annotation.HttpTrigger;
+import com.microsoft.azure.functions.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -48,8 +45,12 @@ public class StudentAzureFunction {
             @BindingName("id") String id,
             ExecutionContext context) {
         log.info("Received request to delete student with id: {}", id);
+
         studentService.deleteStudentById(id);
-        return request.createResponseBuilder(HttpStatus.OK).build();
+
+        return request
+                .createResponseBuilder(HttpStatus.OK)
+                .build();
 
     }
 
@@ -78,6 +79,13 @@ public class StudentAzureFunction {
                 .createResponseBuilder(HttpStatus.OK)
                 .body("Registration processed successfully: " + student.toString())
                 .build();
+    }
+
+    @FunctionName("warmUp")
+    public void warmUp(// Every 5 minutes
+                       @TimerTrigger(name = "keepWarmTrigger", schedule = "0 */5 * * * *") String timerInfo,
+                       ExecutionContext context) {
+        log.info("Warm-up trigger fired at: {}", java.time.LocalDateTime.now());
     }
 
 }
