@@ -7,9 +7,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
-public interface MapperStruct {
+public interface StudentMapStruct {
 
-    MapperStruct INSTANCE = Mappers.getMapper(MapperStruct.class);
+    StudentMapStruct STUDENT_MAP_STRUCT = Mappers.getMapper(StudentMapStruct.class);
 
     @Mapping(target = "id", ignore = true)
     Student dtoToDao(RegistrationFormDTO formDTO);

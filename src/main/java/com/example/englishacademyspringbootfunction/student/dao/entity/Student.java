@@ -6,16 +6,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Reference;
 
-@ToString
 @Data
 @Builder
+@ToString
 @Container(containerName = "students")
 public class Student {
 
     @Id
     @GeneratedValue
     private String id;
+
+    @Reference
+    private ClassRoom classRoom;
 
     private String firstName;
     private String lastName;

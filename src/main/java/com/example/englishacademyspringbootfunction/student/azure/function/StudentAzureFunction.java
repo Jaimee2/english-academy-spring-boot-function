@@ -82,12 +82,12 @@ public class StudentAzureFunction {
                 .build();
     }
 
-    @FunctionName("warmUp")
-    public void warmUp(// Every 5 minutes
-                       @TimerTrigger(name = "keepWarmTrigger", schedule = "0 */1 * * * *") String timerInfo,
-                       ExecutionContext context) {
-        log.info(System.getProperties().toString());
-        log.info("Warm-up trigger fired at: {}", java.time.LocalDateTime.now());
-    }
+//    @FunctionName("warmUp")
+//    public void warmUp(// Every 5 minutes
+//                       @TimerTrigger(name = "keepWarmTrigger", schedule = "0 */1 * * * *") String timerInfo,
+//                       ExecutionContext context) {
+//        log.info(System.getProperties().toString());
+//        log.info("Warm-up trigger fired at: {}", java.time.LocalDateTime.now());
+//    }
 
 }
