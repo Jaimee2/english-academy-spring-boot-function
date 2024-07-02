@@ -31,4 +31,7 @@ public class StudentServiceImpl implements StudentService {
         studentsRepository.deleteById(id);
     }
 
+    public Student getStudent(String id) {
+        return studentsRepository.findById(id).orElseThrow();
+    }
 }

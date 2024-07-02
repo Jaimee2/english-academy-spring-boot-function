@@ -3,8 +3,14 @@ package com.example.englishacademyspringbootfunction.student.azure.function;
 import com.example.englishacademyspringbootfunction.student.dao.entity.Student;
 import com.example.englishacademyspringbootfunction.student.dto.RegistrationFormDTO;
 import com.example.englishacademyspringbootfunction.student.service.StudentService;
-import com.microsoft.azure.functions.*;
-import com.microsoft.azure.functions.annotation.*;
+import com.microsoft.azure.functions.HttpMethod;
+import com.microsoft.azure.functions.HttpRequestMessage;
+import com.microsoft.azure.functions.HttpResponseMessage;
+import com.microsoft.azure.functions.HttpStatus;
+import com.microsoft.azure.functions.annotation.AuthorizationLevel;
+import com.microsoft.azure.functions.annotation.BindingName;
+import com.microsoft.azure.functions.annotation.FunctionName;
+import com.microsoft.azure.functions.annotation.HttpTrigger;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -24,14 +30,29 @@ public class StudentAzureFunction {
                     methods = {HttpMethod.GET},
                     authLevel = AuthorizationLevel.ANONYMOUS,
                     route = "students"
-            ) HttpRequestMessage<Optional<String>> request,
-            ExecutionContext context) {
-        log.info(context.toString());
+            ) HttpRequestMessage<Optional<String>> request) {
+
         log.info("Received request to get all students");
 
         return request.createResponseBuilder(HttpStatus.OK)
                 .header("Content-Type", "application/json")
                 .body(studentService.findAllStudents())
+                .build();
+    }
+
+    @FunctionName("getStudentById")
+    public HttpResponseMessage getStudentById(
+            @HttpTrigger(name = "req",
+                    methods = {HttpMethod.GET},
+                    authLevel = AuthorizationLevel.ANONYMOUS,
+                    route = "students/{id}"
+            ) HttpRequestMessage<Optional<String>> request,
+            @BindingName("id") String id) {
+        log.info("Received request to fetch student with id: {}", id);
+
+        return request
+                .createResponseBuilder(HttpStatus.OK)
+                .body(studentService.getStudent(id))
                 .build();
     }
 
@@ -42,16 +63,12 @@ public class StudentAzureFunction {
                     authLevel = AuthorizationLevel.ANONYMOUS,
                     route = "students/{id}"
             ) HttpRequestMessage<Optional<String>> request,
-            @BindingName("id") String id,
-            ExecutionContext context) {
+            @BindingName("id") String id) {
         log.info("Received request to delete student with id: {}", id);
 
         studentService.deleteStudentById(id);
 
-        return request
-                .createResponseBuilder(HttpStatus.OK)
-                .build();
-
+        return request.createResponseBuilder(HttpStatus.OK).build();
     }
 
     @FunctionName("processRegistration")
@@ -61,23 +78,18 @@ public class StudentAzureFunction {
                     methods = {HttpMethod.POST},
                     authLevel = AuthorizationLevel.ANONYMOUS,
                     route = "registrations"
-            ) HttpRequestMessage<Optional<RegistrationFormDTO>> request,
-            ExecutionContext context) {
+            ) HttpRequestMessage<Optional<RegistrationFormDTO>> request) {
         log.info("Received registration request");
 
         RegistrationFormDTO form = request.getBody().orElse(null);
 
         if (form == null)
-            return request
-                    .createResponseBuilder(HttpStatus.BAD_REQUEST)
-                    .body("Invalid registration form")
-                    .build();
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Invalid registration form").build();
 
         Student student = studentService.saveStudent(form);
         log.info("Processing registration for: {}", form);
 
-        return request
-                .createResponseBuilder(HttpStatus.OK)
+        return request.createResponseBuilder(HttpStatus.OK)
                 .body("Registration processed successfully: " + student.toString())
                 .build();
     }

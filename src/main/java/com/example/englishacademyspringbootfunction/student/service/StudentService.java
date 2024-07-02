@@ -13,4 +13,6 @@ public interface StudentService {
 
     void deleteStudentById(String id);
 
+     Student getStudent(String id);
+
 }
