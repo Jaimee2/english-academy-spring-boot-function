@@ -6,6 +6,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper
 public interface ClassRoomMapStruct {
 
@@ -13,5 +15,9 @@ public interface ClassRoomMapStruct {
 
     @Mapping(target = "id", ignore = true)
     ClassRoom fromDTOtoDAO(ClassRoomDTO classRoomDTO);
+
+    ClassRoomDTO fromDaoToDto(ClassRoom classRoom);
+
+    List<ClassRoomDTO> fromDaoToDto(List<ClassRoom> classRoom);
 
 }

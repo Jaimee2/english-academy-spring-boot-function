@@ -18,7 +18,6 @@ public class Student {
     @GeneratedValue
     private String id;
 
-    @Reference
     private ClassRoom classRoom;
 
     private String firstName;
