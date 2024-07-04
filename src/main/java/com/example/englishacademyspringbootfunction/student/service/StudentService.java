@@ -15,4 +15,6 @@ public interface StudentService {
 
      Student getStudent(String id);
 
+    Student addClassToStudent(String studentId, String classRoomId);
+
 }

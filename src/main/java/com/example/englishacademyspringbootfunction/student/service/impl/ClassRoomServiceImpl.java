@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.englishacademyspringbootfunction.student.mapper.ClassRoomMapStruct.CLASS_ROOM_MAP_STRUCT;
 
@@ -35,6 +36,11 @@ public class ClassRoomServiceImpl implements ClassRoomService {
                 classRoom -> classRoomsRepository.delete(classRoom),
                 () -> log.error("Class with id: {} does not exist", id)
         );
+    }
+
+    @Override
+    public Optional<ClassRoom> getClassRoomById(String id) {
+        return classRoomsRepository.findById(id);
     }
 
 }

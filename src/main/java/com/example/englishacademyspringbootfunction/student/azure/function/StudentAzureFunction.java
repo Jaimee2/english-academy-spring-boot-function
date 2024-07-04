@@ -52,6 +52,7 @@ public class StudentAzureFunction {
 
         return request
                 .createResponseBuilder(HttpStatus.OK)
+                .header("Content-Type", "application/json")
                 .body(studentService.getStudent(id))
                 .build();
     }
@@ -91,6 +92,24 @@ public class StudentAzureFunction {
 
         return request.createResponseBuilder(HttpStatus.OK)
                 .body("Registration processed successfully: " + student.toString())
+                .build();
+    }
+
+    @FunctionName("addClassToStudent")
+    public HttpResponseMessage addClassToStudent(
+            @HttpTrigger(
+                    name = "req",
+                    methods = {HttpMethod.PUT},
+                    authLevel = AuthorizationLevel.ANONYMOUS,
+                    route = "student/{studentId}/addClass/{classRoomId}"
+            ) HttpRequestMessage<Optional<String>> request,
+            @BindingName("studentId") String studentId,
+            @BindingName("classRoomId") String classRoomId) {
+        log.info("Received request to add classRoom {} to student {}", classRoomId, studentId);
+        return request
+                .createResponseBuilder(HttpStatus.OK)
+                .header("Content-Type", "application/json")
+                .body(studentService.addClassToStudent(studentId, classRoomId))
                 .build();
     }
 
