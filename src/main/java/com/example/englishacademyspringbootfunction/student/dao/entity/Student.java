@@ -6,7 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Reference;
+
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -22,6 +23,7 @@ public class Student {
 
     private String firstName;
     private String lastName;
+    private LocalDate birthDate;
     private String address;
     private String parentPhone;
     private String parentEmail;
